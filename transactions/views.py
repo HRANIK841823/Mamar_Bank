@@ -53,7 +53,7 @@ class TransactionCreateMixin(LoginRequiredMixin, CreateView):
 class DepositMoneyView(TransactionCreateMixin):
     form_class = DepositForm
     title = 'Deposit'
-
+    success_url = reverse_lazy('deposit_money')
     def get_initial(self):
         initial = {'transaction_type': DEPOSIT}
         return initial
