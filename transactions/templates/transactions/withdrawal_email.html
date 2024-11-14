@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deposit Confirmation</title>
+    <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css');
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-2xl mx-auto mt-8 bg-white p-6 rounded-lg shadow-lg">
+        <div class="text-center">
+            <h2 class="text-2xl font-bold text-gray-800">Withdraw Confirmation</h2>
+            <p class="text-sm text-gray-500">Thank you for choosing Mamar Bank!</p>
+        </div>
+        
+        <div class="mt-4">
+            <p class="text-lg text-gray-700">Hello {{user.first_name}} {{user.last_name}},</p>
+            <p class="text-md text-gray-600 mt-2">We are pleased to inform you that your withdraw request for <span class="font-semibold text-green-600">${{amount}}</span> has been successfully completed.</p>
+            <p class="text-md text-gray-600 mt-2">After the withdraw, your total account balance is <span class="font-semibold text-green-600">${{user.account.balance}}</span>.</p>
+        </div>
+        
+        <div class="mt-6">
+            <p class="text-md text-gray-700">Thanks for banking with us!</p>
+            <p class="font-semibold text-gray-900">Mamar Bank</p>
+        </div>
+        
+        <div class="mt-8 border-t pt-4 text-sm text-gray-500">
+            <p>If you have any questions, feel free to contact us at <a href="mailto:support@mamarbank.com" class="text-blue-600 hover:underline">support@mamarbank.com</a>.</p>
+        </div>
+    </div>
+</body>
+</html>
