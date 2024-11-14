@@ -84,7 +84,7 @@ class DepositMoneyView(TransactionCreateMixin):
         # send_email=EmailMultiAlternatives(mail_subject,'',to=[to_email])
         # send_email.attach_alternative(message,"text/html")
         # send_email.send()
-        send_transaction_email(self.request.user, amount, "Deposite Message", "transactions/deposite_email.html")
+        send_transaction_email(self.request.user, amount, "Deposite Message", "transactions/deposit_email.html")
         return super().form_valid(form)
 
 
