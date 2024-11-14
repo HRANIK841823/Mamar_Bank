@@ -26,8 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'mamar-bank-7dh7.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://mamar-bank-7dh7.onrender.com']
 # Application definition
 
 INSTALLED_APPS = [
