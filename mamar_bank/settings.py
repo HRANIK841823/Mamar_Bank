@@ -89,19 +89,31 @@ env = environ.Env()
 environ.Env.read_env()
 SECRET_KEY = env("SECRET_KEY", default="your-default-secret-key")
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': env("DB_NAME", default="mamar_bank"),
+#         'USER': env("DB_USER", default="postgres"),
+#         'PASSWORD': env("DB_PASSWORD", default="12345"),
+#         'HOST': env("DB_HOST", default="localhost"),
+#         'PORT': env("DB_PORT", default="5432"),
+#     }
+# }
+# Import the dj-database-url package at the beginning of the file
+import dj_database_url
+# Database documentation https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env("DB_NAME", default="mamar_bank"),
-        'USER': env("DB_USER", default="postgres"),
-        'PASSWORD': env("DB_PASSWORD", default="12345"),
-        'HOST': env("DB_HOST", default="localhost"),
-        'PORT': env("DB_PORT", default="5432"),
-    }
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgresql://mamarbank_6cs2_user:3dKLDUO71tokcBuBYvFkQtqtQ9CnowiO@dpg-csr31bhu0jms738m1mb0-a.oregon-postgres.render.com/mamarbank_6cs2',        
+        conn_max_age=600    
+    ) 
 }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
