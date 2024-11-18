@@ -52,8 +52,7 @@ class WithdrawForm(TransactionForm):
 
         if amount > balance: # amount = 5000, tar balance ache 200
             raise forms.ValidationError(
-                f'You have {balance} $ in your account. '
-                'You can not withdraw more than your account balance'
+               "The bank is bankrupt. You cannot withdraw more than your total deposit."
             )
 
         return amount
