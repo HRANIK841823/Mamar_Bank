@@ -9,45 +9,35 @@ from django.views import View
 from .models import UserBankAccount
 from django.contrib import messages
 from .forms import TransferAmountForm
+#Password Changing Form
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 #Email sending headers
 from django.core.mail import EmailMessage,EmailMultiAlternatives
 from django.template.loader import render_to_string
 #Email sending Function
 def send_transaction_email(user, amount, sender_subject,receiver_subject, sender_template, receiver_template, receiver=None, sender=None):
-    # Create the initial context
     context = {
         'user': user,
         'amount': amount,
     }
-
-    # Add receiver and receiver account number if provided
-    if receiver:
-        context['receiver'] = receiver
-        context['receiver_account_no'] = receiver.account.account_no  # Access the account number correctly
-
-    # Add sender if provided
+    # Money Sender
     if sender:
         context['sender'] = sender
-
-    # Render the email for the sender using the sender_template
     sender_message = render_to_string(sender_template, context)
-    
-    # Create the email and send it to the sender
     send_email_to_sender = EmailMultiAlternatives(sender_subject, '', to=[user.user.email])
     send_email_to_sender.attach_alternative(sender_message, "text/html")
     send_email_to_sender.send()
-
-    # If there is a receiver, render and send the email using the receiver_template
+    
+    # Money Receiver
     if receiver:
-        # Render the email for the receiver using the receiver_template
+        context['receiver'] = receiver
+        context['receiver_account_no'] = receiver.account.account_no 
+    if receiver:
         receiver_message = render_to_string(receiver_template, context)
-        
-        # Send email to the receiver
         send_email_to_receiver = EmailMultiAlternatives(receiver_subject, '', to=[receiver.email])
         send_email_to_receiver.attach_alternative(receiver_message, "text/html")
         send_email_to_receiver.send()
-
-
 
 # Create your views here.
 class UserRegistrationView(FormView):
@@ -131,3 +121,21 @@ class TransferAmountView(FormView):
         else:
             messages.error(self.request, result['message'])
             return self.form_invalid(form) 
+
+#Password Change Class based View
+class PasswordChangeView(FormView):
+    template_name = 'accounts/change_your_pass.html'
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy('profile') 
+
+    def get_form_kwargs(self):
+        """Pass the current user to the form."""
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        form.save()  
+        update_session_auth_hash(self.request, form.user) 
+        messages.success(self.request, 'Password changed successfully.')
+        return super().form_valid(form)
